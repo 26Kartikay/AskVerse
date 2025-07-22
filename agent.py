@@ -13,7 +13,7 @@ from langchain.chains import create_retrieval_chain
 # === Step 1: PDF Loading ===
 PDF_PATH = "arch.pdf"
 if not os.path.exists("chroma_db"):
-    print("📥 Loading and splitting PDF...")
+    print("Loading and splitting PDF...")
     loader = PyPDFLoader(PDF_PATH)
     docs = loader.load()
 
@@ -25,9 +25,9 @@ if not os.path.exists("chroma_db"):
     # Embedding and saving vector DB
     db = Chroma.from_documents(documents, OllamaEmbeddings(), persist_directory="chroma_db")
     db.persist()
-    print("✅ Vector DB created and saved.")
+    print(" Vector DB created and saved.")
 else:
-    print("📂 Loading existing vector DB...")
+    print("Loading existing vector DB...")
     db = Chroma(persist_directory="chroma_db", embedding_function=OllamaEmbeddings())
 
 # === Step 2: Retrieval Setup ===
@@ -55,9 +55,9 @@ print("\n💬 Ask me anything from the PDF. Type 'exit' to quit.")
 while True:
     query = input("\nYou: ")
     if query.strip().lower() in ['exit', 'quit']:
-        print("👋 Bye!")
+        print(" Bye!")
         break
 
     response = retrieval_chain.invoke({"input": query})
     answer = response.get("answer", response)
-    print("\n🧠 Answer:", answer)
+    print("\n Answer:", answer)
